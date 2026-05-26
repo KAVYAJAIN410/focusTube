@@ -9,8 +9,10 @@ interface Video {
   id: string;
   title: string;
   channel: string;
+  channelIcon: string | null;
   publishedAt: string;
   thumbnail: string;
+  views: string | null;
 }
 
 function SearchResults() {

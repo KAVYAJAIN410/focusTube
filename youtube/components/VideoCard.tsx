@@ -4,8 +4,10 @@ interface VideoCardProps {
   id: string;
   title: string;
   channel: string;
+  channelIcon?: string | null;
   publishedAt: string;
   thumbnail: string;
+  views?: string | null;
 }
 
 function timeAgo(dateString: string): string {
@@ -44,8 +46,10 @@ export default function VideoCard({
   id,
   title,
   channel,
+  channelIcon,
   publishedAt,
   thumbnail,
+  views,
 }: VideoCardProps) {
   return (
     <Link
@@ -59,14 +63,26 @@ export default function VideoCard({
           className="aspect-video w-full object-cover transition-transform duration-200 group-hover:scale-105"
         />
       </div>
-      <div className="mt-3 space-y-1">
-        <h3 className="line-clamp-2 text-sm font-medium leading-snug text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
-          {decodeEntities(title)}
-        </h3>
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">{channel}</p>
-        <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          {timeAgo(publishedAt)}
-        </p>
+      <div className="mt-3 flex gap-3">
+        {channelIcon ? (
+          <img
+            src={channelIcon}
+            alt={channel}
+            className="h-9 w-9 shrink-0 rounded-full"
+          />
+        ) : (
+          <div className="h-9 w-9 shrink-0 rounded-full bg-zinc-200 dark:bg-zinc-700" />
+        )}
+        <div className="min-w-0 space-y-1">
+          <h3 className="line-clamp-2 text-sm font-medium leading-snug text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-400">
+            {decodeEntities(title)}
+          </h3>
+          <p className="text-sm font-medium text-blue-600 dark:text-blue-400">{channel}</p>
+          <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            {views && <>{views} views &middot; </>}
+            {timeAgo(publishedAt)}
+          </p>
+        </div>
       </div>
     </Link>
   );
